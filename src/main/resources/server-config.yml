@@ -1,0 +1,72 @@
+version: '1.0'
+description: >
+  Configuración local para simular APIs de AWS usando Grizzly y Jersey.
+
+server:
+  port: 8080
+  contextPath: /quiztea/api/v1/
+
+apis:
+  - path: /poll
+    method: GET
+    handler: getPolls
+    description: "Gets a list of polls"
+
+  - path: /poll/{id}
+    method: GET
+    handler: getPollById
+    description: "Gets a poll by id"
+
+  - path: /poll/{id}/votes
+    method: GET
+    handler: getPollVotes
+    description: "Gets the votes for a specific poll"
+
+  - path: /poll/{pollId}/votes/{voteId}
+    method: GET
+    handler: getPollVoteById
+    description: "Gets poll vote by id"
+
+  - path: /poll
+    method: POST
+    handler: insertPoll
+    description: "Create a Poll resource"
+
+  - path: /poll/{id}/votes
+    method: POST
+    handler: insertPollVotes
+    description: "Create the votes for a specific poll"
+
+  - path: /quiz
+    method: GET
+    handler: getQuiz
+    description: "Get a list of quiz"
+
+  - path: /quiz/{id}
+    method: GET
+    handler: getQuizById
+    description: "Get a quiz by id"
+
+  - path: /quiz/{quizId}/results
+    method: GET
+    handler: getQuizResults
+    description: "Get the results for a specific quiz"
+
+  - path: /quiz/{quizId}/results/{resultId}
+    method: GET
+    handler: getQuizResultsById
+    description: "Get a result by id for a specific quiz"
+
+  - path: /quiz
+    method: POST
+    handler: insertQuiz
+    description: "Create a Quiz resource"
+
+  - path: /quiz/{id}/results
+    method: POST
+    handler: insertQuizResults
+    description: "Create the results for a specific quiz"
+
+logging:
+  level: INFO
+  output: console

@@ -1,0 +1,51 @@
+{
+  "id": "quiz2",
+  "createdAt": "2024-09-30T10:00:00Z",
+  "createdBy": "user456",
+  "title": "Quiz de Historia",
+  "description": "Evalúa tus conocimientos en historia.",
+  "questions": [
+    {
+      "questionId": "q1",
+      "label": "¿Qué es un servidor web?",
+      "type": "multiple_choice",
+      "level": 1,
+      "possibleAnswers": [
+        {
+          "answerId": "a1",
+          "text": "Un dispositivo físico que almacena información."
+        },
+        {
+          "answerId": "a2",
+          "text": "Un software que gestiona solicitudes HTTP."
+        },
+        {
+          "answerId": "a3",
+          "text": "Una base de datos distribuida."
+        }
+      ],
+      "correctAnswer": "a2"
+    },
+    {
+      "questionId": "q2",
+      "label": "¿Cuál es el sistema operativo más utilizado?",
+      "type": "multiple_choice",
+      "level": 2,
+      "possibleAnswers": [
+        {
+          "answerId": "a1",
+          "text": "Windows"
+        },
+        {
+          "answerId": "a2",
+          "text": "Linux"
+        },
+        {
+          "answerId": "a3",
+          "text": "macOS"
+        }
+      ],
+      "correctAnswer": "a1"
+    }
+  ]
+}

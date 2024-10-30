@@ -1,0 +1,18 @@
+{
+  "quizId": "quiz2",
+  "userId": "userxx",
+  "startTime": "2024-09-30T10:00:00Z",
+  "endTime": "2024-09-30T10:10:00Z",
+  "score": 8,
+  "numberOfQuestions": 10,
+  "userAnswers": [
+    {
+      "questionId": "q1",
+      "answer": "a3"
+    },
+    {
+      "questionId": "q2",
+      "answer": "a1"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "poll125",
+  "createdAt": "2024-10-09T10:00:00Z",
+  "createdBy": "user456",
+  "text": "¿Qué tan importante crees que es la tecnología en nuestra vida diaria?",
+  "resource": "",
+  "options": [
+    {
+      "optionId": "o1",
+      "text": "Es fundamental, no podríamos funcionar sin ella fuck."
+    },
+    {
+      "optionId": "o2",
+      "text": "Muy importante, pero podemos vivir sin ciertos avances."
+    },
+    {
+      "optionId": "o3",
+      "text": "Algo importante, depende del contexto."
+    },
+    {
+      "optionId": "o4",
+      "text": "No es crucial, pero facilita algunas cosas."
+    },
+    {
+      "optionId": "o5",
+      "text": "No es importante, podemos prescindir de ella."
+    }
+  ]
+}
