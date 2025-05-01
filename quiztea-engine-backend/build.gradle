@@ -1,0 +1,60 @@
+plugins {
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    test {
+        useJUnitPlatform()
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+def jerseyVersion = '3.0.3'
+def kotlinVersion = '2.0.20'
+def kotlinTestVersion = '1.6.0'
+def grizzlyVersion = '3.1.1'
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlinTestVersion"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinTestVersion"
+    //JERSEY
+    implementation "org.glassfish.jersey.containers:jersey-container-grizzly2-http:$grizzlyVersion"
+    implementation "org.glassfish.jersey.inject:jersey-hk2:$jerseyVersion"
+    implementation "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+    //JERSEY_EOD
+    //AWS
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.3'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.14.0'
+    runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.6.0'
+    //SERVLET API
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "jakarta.servlet:jakarta.servlet-api:5.0.0"
+    //JACKSON
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
+    //DYNAMO
+    implementation "software.amazon.awssdk:dynamodb:2.28.9"
+    implementation "software.amazon.awssdk:aws-core:2.28.9"
+    implementation "software.amazon.awssdk:utils:2.28.9"
+}
+
+task copyDependencies(type: Copy) {
+    into("$buildDir/libs")
+    from(configurations.runtimeClasspath) {
+        into 'lib'
+    }
+}
+
+application {
+    mainClass.set("server.SetupKt")
+}
+
+startScripts.dependsOn(copyDependencies)
+
+version = '1.0.0'

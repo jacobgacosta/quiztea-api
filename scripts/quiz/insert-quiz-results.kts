@@ -1,8 +1,6 @@
 import com.koupper.container.app
-import com.koupper.container.interfaces.Container
 import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.providers.files.*
-import java.util.UUID
 
 val insertQuizResults: (Map<String, Any>) -> String = { params ->
     val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
@@ -20,7 +18,7 @@ val insertQuizResults: (Map<String, Any>) -> String = { params ->
         val userAnswers: List<Map<String, String>>
     )
 
-    val jsonFileHandler = app.createInstanceOf(JsonFileHandler::class) as JsonFileHandlerImpl<QuizResult>
+    val jsonFileHandler = app.createInstanceOf(JSONFileHandler::class) as JSONFileHandlerImpl<QuizResult>
 
     val qr = jsonFileHandler.read(quizResult).toType()
 

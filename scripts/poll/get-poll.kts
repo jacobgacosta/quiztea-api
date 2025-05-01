@@ -1,6 +1,6 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
-import com.koupper.providers.files.JsonFileHandler
+import com.koupper.providers.files.JSONFileHandler
 
 val getPoll: (Map<String, Any>) -> String = { params ->
     val tableName = "Quiztea_Poll"
@@ -13,7 +13,7 @@ val getPoll: (Map<String, Any>) -> String = { params ->
         val allItems: List<Map<String, Any>> = dynamoClient.getAllItemsPaginated(tableName)
 
         if (allItems.isNotEmpty()) {
-            val textJsonParser = app.createInstanceOf(JsonFileHandler::class)
+            val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
             textJsonParser.mapToJsonString(allItems)
         } else {
             "Item not found in $tableName."
@@ -27,7 +27,7 @@ val getPoll: (Map<String, Any>) -> String = { params ->
         )?.first()
 
         item?.let {
-            val textJsonParser = app.createInstanceOf(JsonFileHandler::class)
+            val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
             textJsonParser.mapToJsonString(it)
         } ?: "Item not found in $tableName."
     }

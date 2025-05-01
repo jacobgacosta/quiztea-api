@@ -1,7 +1,7 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
-import com.koupper.providers.files.JsonFileHandler
-import com.koupper.providers.files.JsonFileHandlerImpl
+import com.koupper.providers.files.JSONFileHandler
+import com.koupper.providers.files.JSONFileHandlerImpl
 
 val getPollVotes: (Map<String, Any>) -> String = { params ->
     data class Option(val id: String, val description: String, val totalOfVotes: Int)
@@ -44,7 +44,7 @@ val getPollVotes: (Map<String, Any>) -> String = { params ->
             options.add(Option(optionId, pullOption["text"] as String, votesCounter))
         }
 
-        val jsonFileHandler = app.createInstanceOf(JsonFileHandler::class) as JsonFileHandlerImpl<VotesInfo>
+        val jsonFileHandler = app.createInstanceOf(JSONFileHandler::class) as JSONFileHandlerImpl<VotesInfo>
         votesInfo = jsonFileHandler.toJsonString(VotesInfo(poll["id"] as String, options))
     }
 

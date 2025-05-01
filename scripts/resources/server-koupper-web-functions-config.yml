@@ -1,0 +1,17 @@
+version: '1.0'
+description: >
+  Configuración local para simular APIs de AWS usando Grizzly y Jersey.
+
+server:
+  port: 8080
+  contextPath: /koupperwf/api/v1/
+
+apis:
+  - path: /greetings
+    method: POST
+    handler: getGreeting
+    description: "Gets a greeting"
+
+logging:
+  level: INFO
+  output: console

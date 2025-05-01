@@ -1,8 +1,8 @@
-import com.koupper.container.interfaces.Container
+import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
 
-val createQuizResultsTable: (Container) -> Int = let@{ container ->
-    val dynamoClient = container.createInstanceOf(DynamoClient::class)
+val createQuizResultsTable: () -> Int = let@{
+    val dynamoClient = app.createInstanceOf(DynamoClient::class)
     val quizResultsTable = "Quiztea_Quiz_Results"
 
     if (dynamoClient.doesTableExist(quizResultsTable)) {

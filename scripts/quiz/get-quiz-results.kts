@@ -1,7 +1,6 @@
 import com.koupper.container.app
-import com.koupper.container.interfaces.Container
 import com.koupper.providers.aws.dynamo.DynamoClient
-import com.koupper.providers.files.JsonFileHandler
+import com.koupper.providers.files.JSONFileHandler
 
 val getQuizResults: (Map<String, Any>) -> String = { params ->
     val tableName = "Quiztea_Quiz_Results"
@@ -21,7 +20,7 @@ val getQuizResults: (Map<String, Any>) -> String = { params ->
     )
 
     item?.let {
-        val textJsonParser = app.createInstanceOf(JsonFileHandler::class)
+        val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
         textJsonParser.mapToJsonString(it)
     } ?: "Item not found in $tableName."
 }

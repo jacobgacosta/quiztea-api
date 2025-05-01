@@ -1,0 +1,27 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "2.0.20"
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+    mavenLocal()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-script-runtime:2.0.20"
+    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.9.0"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDirs = ['boot', 'poll', 'quiz']
+        }
+        resources {
+            srcDirs = ['resources']
+        }
+    }
+}

@@ -1,5 +1,4 @@
 import com.koupper.container.app
-import com.koupper.container.interfaces.Container
 import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.providers.files.TextFileHandler
 

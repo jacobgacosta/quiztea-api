@@ -1,8 +1,8 @@
 import com.koupper.octopus.process.ScriptProcessor
 
-val setup: (ScriptProcessor) -> Unit = { processor ->
+val setup: (ScriptProcessor) -> ScriptProcessor = { processor ->
     processor.register(
-        "quiztea-engine",
+        "quiztea-engine-backend",
         mutableMapOf(
             "server.port" to "8080",
             "server.rootUrl" to "api/v1"
@@ -25,4 +25,6 @@ val setup: (ScriptProcessor) -> Unit = { processor ->
             "insertQuizResults" to "quiz/insert-quiz-results.kts"
         )
     ).run()
+
+    processor
 }
