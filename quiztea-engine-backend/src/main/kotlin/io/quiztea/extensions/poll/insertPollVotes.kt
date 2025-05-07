@@ -7,9 +7,7 @@ import com.koupper.providers.files.*
 val insertPollVotes: (Map<String, Any>) -> String = { params ->
     val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
 
-    val jsonObject: String =
-        txtFileHandler.read("C:\\Users\\dosek\\develop\\quiztea-engine\\src\\main\\resources\\poll-votes.json")
-
+    val jsonObject: String = params["body"] as String
     val dynamoClient = app.createInstanceOf(DynamoClient::class)
 
     val tableName = "Quiztea_Poll_Votes"

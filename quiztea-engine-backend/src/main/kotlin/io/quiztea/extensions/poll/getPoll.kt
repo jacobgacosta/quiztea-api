@@ -29,6 +29,6 @@ val getPoll: (Map<String, Any>) -> String = { params ->
         item?.let {
             val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
             textJsonParser.mapToJsonString(it)
-        } ?: ""
+        } ?: "Item not found in $tableName."
     }
 }

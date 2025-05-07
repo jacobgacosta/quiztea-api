@@ -1,8 +1,10 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
+import com.koupper.octopus.annotations.Export
 
+@Export
 val createPollTable: () -> Int = let@{
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
     val tableName = "Quiztea_Poll"
 
@@ -12,12 +14,12 @@ val createPollTable: () -> Int = let@{
     }
 
     val keySchema = listOf(
-        Pair("id", "HASH"),
+        Pair("pollId", "HASH"),
         Pair("createdBy", "RANGE")
     )
 
     val attributeDefinitions = listOf(
-        Pair("id", "S"),
+        Pair("pollId", "S"),
         Pair("createdBy", "S")
     )
 
@@ -36,7 +38,7 @@ val createPollTable: () -> Int = let@{
         mapOf(
             "IndexName" to "PollIdIndex",
             "KeySchema" to listOf(
-                mapOf("AttributeName" to "id", "KeyType" to "HASH")
+                mapOf("AttributeName" to "pollId", "KeyType" to "HASH")
             ),
             "Projection" to mapOf("ProjectionType" to "ALL"),
             "ProvisionedThroughput" to mapOf(

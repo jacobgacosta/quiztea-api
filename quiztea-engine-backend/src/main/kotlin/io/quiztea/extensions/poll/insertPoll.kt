@@ -9,7 +9,7 @@ val insertPoll: (Map<String, Any>) -> String = { params ->
 
     val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
 
-    val jsonObject = txtFileHandler.read("C:\\Users\\dosek\\develop\\quiztea-engine\\src\\main\\resources\\poll.json")
+    val jsonObject = params["body"] as String
 
     try {
         val tableName = "Quiztea_Poll"

@@ -1,8 +1,10 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
+import com.koupper.octopus.annotations.Export
 
+@Export
 val createQuizResultsTable: () -> Int = let@{
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
     val quizResultsTable = "Quiztea_Quiz_Results"
 
     if (dynamoClient.doesTableExist(quizResultsTable)) {
@@ -11,12 +13,12 @@ val createQuizResultsTable: () -> Int = let@{
     }
 
     val keySchema = listOf(
-        Pair("quizId", "HASH"),
+        Pair("quizResultsId", "HASH"),
         Pair("userId", "RANGE")
     )
 
     val attributeDefinitions = listOf(
-        Pair("quizId", "S"),
+        Pair("quizResultsId", "S"),
         Pair("userId", "S")
     )
 

@@ -10,7 +10,7 @@ import java.net.URI
 import java.util.logging.Logger
 
 const val BASE_URL = "http://localhost"
-const val PORT = 8080
+const val PORT = 8082
 
 val logger: Logger = Logger.getLogger("ServerLogger")
 
