@@ -10,7 +10,7 @@ val getPollVotes: (Map<String, Any>) -> String = { params ->
 
     data class VotesInfo(val pollId: String, val votes: List<Option>)
 
-    val pollId = params["pollId"] as? String
+    val pollId = params["id"] as? String
 
     val dynamoClient = app.createInstanceOf(DynamoClient::class)
 
@@ -30,7 +30,7 @@ val getPollVotes: (Map<String, Any>) -> String = { params ->
 
             val votes = dynamoClient.getItems(
                 tableName = pollVotesTable,
-                partitionKeyName = "pollId",
+                partitionKeyName = "pollVotesId",
                 partitionKeyValue = pollId,
                 gsiName = "PollIdIndex",
                 filterExpression = "contains(selectedOptionId, :filterValue)",

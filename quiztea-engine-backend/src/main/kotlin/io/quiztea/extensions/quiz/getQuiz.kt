@@ -21,7 +21,7 @@ val getQuiz: (Map<String, Any>) -> String = { params ->
         println("QuizIdIndex")
         val item = dynamoClient.getItems(
             tableName = tableName,
-            partitionKeyName = "id",
+            partitionKeyName = "quizId",
             partitionKeyValue = params["quizId"] as String,
             gsiName = "QuizIdIndex"
         )?.first()

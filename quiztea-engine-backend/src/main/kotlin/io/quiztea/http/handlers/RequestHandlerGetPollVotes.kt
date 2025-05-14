@@ -12,7 +12,7 @@ class RequestHandlerGetPollVotes : RequestHandler<APIGatewayProxyRequestEvent, A
         return try {
             val pollId = input?.pathParameters?.get("id") ?: createErrorResponse(404, "Votes were not found.")
 
-            val result: String = executor.call(getPollVotes, mapOf("pollId" to pollId))
+            val result: String = executor.call(getPollVotes, mapOf("pollVotesId" to pollId))
 
             APIGatewayProxyResponseEvent().apply {
                 statusCode = 200

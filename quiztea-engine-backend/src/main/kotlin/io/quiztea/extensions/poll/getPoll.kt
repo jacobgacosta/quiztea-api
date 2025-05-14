@@ -21,7 +21,7 @@ val getPoll: (Map<String, Any>) -> String = { params ->
     } else {
         val item = dynamoClient.getItems(
             tableName = tableName,
-            partitionKeyName = "id",
+            partitionKeyName = "pollId",
             partitionKeyValue = params["pollId"] as String,
             gsiName = "PollIdIndex"
         )?.first()

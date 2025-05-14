@@ -165,6 +165,7 @@ class AWSLambdaController {
 
     ): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
             path = uriInfo.path
             httpMethod = "GET"
             headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
