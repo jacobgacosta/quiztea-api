@@ -5,9 +5,7 @@ import com.koupper.providers.files.*
 val insertQuizResults: (Map<String, Any>) -> String = { params ->
     val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
 
-    val quizResult =
-        txtFileHandler.read("C:\\Users\\dosek\\develop\\quiztea-engine\\src\\main\\resources\\quiz-results.json")
-
+    val quizResult = params["body"] as String
     data class QuizResult(
         val quizId: String,
         val userId: String,
