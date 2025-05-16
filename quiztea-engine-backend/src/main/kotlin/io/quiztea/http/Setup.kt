@@ -6,6 +6,7 @@ import com.koupper.octopus.createDefaultConfiguration
 import io.quiztea.extensions.poll.getPoll
 import io.quiztea.extensions.poll.getPollVotes
 import org.glassfish.jersey.server.ResourceConfig
+import server.CORSFilter
 import java.net.URI
 import java.util.logging.Logger
 
@@ -19,6 +20,7 @@ val executor = createDefaultConfiguration()
 class Setup : ResourceConfig() {
     init {
         packages("io.quiztea.http.controllers")
+        register(CORSFilter::class.java)
     }
 }
 

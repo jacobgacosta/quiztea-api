@@ -99,9 +99,7 @@ class AWSLambdaController {
     @Path("/poll")
     @Consumes("application/json")
     @Produces("application/json")
-    fun getPolls(
-
-    ): APIGatewayProxyResponseEvent {
+    fun getPolls(): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
             path = uriInfo.path
             httpMethod = "GET"
@@ -119,9 +117,7 @@ class AWSLambdaController {
     @Path("/poll/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    fun getPollById(
-
-    ): APIGatewayProxyResponseEvent {
+    fun getPollById(): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
             pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
             path = uriInfo.path
