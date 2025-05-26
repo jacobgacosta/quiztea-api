@@ -53,6 +53,43 @@ class AWSLambdaController {
         return requestHandlerGetUser.handleRequest(apiGatewayProxyRequestEvent, null)
     }
 
+    @GET
+    @Path("/password")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getPassword(): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetPassword = RequestHandlerGetPassword()
+
+        return requestHandlerGetPassword.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @POST
+    @Path("/password")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun updatePassword(
+        bodyJson: String
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "POST"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = bodyJson
+        }
+
+        val requestHandlerUpdatePassword = RequestHandlerUpdatePassword()
+
+        return requestHandlerUpdatePassword.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
     @POST
     @Path("/poll")
     @Consumes("application/json")

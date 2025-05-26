@@ -5,7 +5,7 @@ import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.providers.files.*
 
 val insertQuizResults: (Map<String, Any>) -> String = { params ->
-    val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
+    val txtFileHandler = app.getInstance(TextFileHandler::class)
 
     val quizResult = params["body"] as String
 
@@ -19,11 +19,11 @@ val insertQuizResults: (Map<String, Any>) -> String = { params ->
         val userAnswers: List<Map<String, String>>
     )
 
-    val jsonFileHandler = app.createInstanceOf(JSONFileHandler::class) as JSONFileHandlerImpl<QuizResult>
+    val jsonFileHandler = app.getInstance(JSONFileHandler::class) as JSONFileHandlerImpl<QuizResult>
 
     val qr = jsonFileHandler.read(quizResult).toType()
 
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
     val quizTable = "Quiztea_Quiz"
 

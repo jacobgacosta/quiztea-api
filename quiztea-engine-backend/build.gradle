@@ -23,7 +23,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlinTestVersion"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinTestVersion"
     //JERSEY
     implementation "org.glassfish.jersey.containers:jersey-container-grizzly2-http:$grizzlyVersion"
     implementation "org.glassfish.jersey.inject:jersey-hk2:$jerseyVersion"
@@ -52,7 +51,7 @@ task copyDependencies(type: Copy) {
 }
 
 application {
-    mainClass.set("server.SetupKt")
+    mainClass.set("io.quiztea.http.SetupKt")
 }
 
 startScripts.dependsOn(copyDependencies)

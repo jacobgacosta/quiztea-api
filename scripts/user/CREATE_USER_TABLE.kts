@@ -3,13 +3,13 @@ import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.octopus.annotations.Export
 
 @Export
-val createPollTable: () -> Int = let@{
+val createQuizTable: () -> Int = let@{
     val dynamoClient = app.getInstance(DynamoClient::class)
 
-    val tableName = "Users"
+    val quizTable = "Users"
 
-    if (dynamoClient.doesTableExist(tableName)) {
-        println("The table '$tableName' already exists.")
+    if (dynamoClient.doesTableExist(quizTable)) {
+        println("The table '$quizTable' already exists.")
         return@let 200
     }
 
@@ -50,12 +50,12 @@ val createPollTable: () -> Int = let@{
 
     try {
         dynamoClient.createTable(
-            tableName = tableName,
+            tableName = quizTable,
             keySchema = keySchema,
             attributeDefinitions = attributeDefinitions,
             globalSecondaryIndexes = gsis
         )
-        println("$tableName successfully created with GSIs.")
+        println("$quizTable successfully created.")
     } catch (e: Exception) {
         println("Error creating table: ${e.message}")
         return@let 500

@@ -5,9 +5,9 @@ import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.providers.files.TextFileHandler
 
 val insertQuiz: (Map<String, Any>) -> String = { params ->
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
-    val txtFileHandler = app.createInstanceOf(TextFileHandler::class)
+    val txtFileHandler = app.getInstance(TextFileHandler::class)
 
     val jsonObject: String = params["body"] as String
 

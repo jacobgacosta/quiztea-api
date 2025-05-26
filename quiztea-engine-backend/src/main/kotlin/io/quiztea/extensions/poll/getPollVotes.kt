@@ -12,7 +12,7 @@ val getPollVotes: (Map<String, Any>) -> String = { params ->
 
     val pollId = params["id"] as? String
 
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
     val poll = dynamoClient.getItems("Quiztea_Poll", "id", pollId, "PollIdIndex")?.first()
 
@@ -46,7 +46,7 @@ val getPollVotes: (Map<String, Any>) -> String = { params ->
             options.add(Option(optionId, pullOption["text"] as String, votesCounter))
         }
 
-        val jsonFileHandler = app.createInstanceOf(JSONFileHandler::class) as JSONFileHandlerImpl<VotesInfo>
+        val jsonFileHandler = app.getInstance(JSONFileHandler::class) as JSONFileHandlerImpl<VotesInfo>
         votesInfo = jsonFileHandler.toJsonString(VotesInfo(poll["id"] as String, options))
     }
 
