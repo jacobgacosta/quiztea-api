@@ -16,6 +16,44 @@ class AWSLambdaController {
     private lateinit var inputHeaders: HttpHeaders
 
     @POST
+    @Path("/user")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun insertUser(
+        bodyJson: String
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "POST"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = bodyJson
+        }
+
+        val requestHandlerInsertUser = RequestHandlerInsertUser()
+
+        return requestHandlerInsertUser.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @GET
+    @Path("/user")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getUser(): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+
+        val requestHandlerGetUser = RequestHandlerGetUser()
+
+        return requestHandlerGetUser.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @POST
     @Path("/poll")
     @Consumes("application/json")
     @Produces("application/json")
