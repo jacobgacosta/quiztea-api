@@ -15,6 +15,117 @@ class AWSLambdaController {
     @Context
     private lateinit var inputHeaders: HttpHeaders
 
+    @GET
+    @Path("/quizzes")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getAllInit(
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetAllQuizzes = RequestHandlerGetAllQuizzes()
+        return requestHandlerGetAllQuizzes.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @GET
+    @Path("/quizzes/{page}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getAll(
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetAllQuizzesByLong = RequestHandlerGetAllQuizzesByLong()
+        return requestHandlerGetAllQuizzesByLong.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @POST
+    @Path("/user")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun insertUser(
+        bodyJson: String
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "POST"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = bodyJson
+        }
+
+        val requestHandlerInsertUser = RequestHandlerInsertUser()
+
+        return requestHandlerInsertUser.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @GET
+    @Path("/user")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getUser(): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+
+        val requestHandlerGetUser = RequestHandlerGetUser()
+
+        return requestHandlerGetUser.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @GET
+    @Path("/password")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getPassword(): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetPassword = RequestHandlerGetPassword()
+
+        return requestHandlerGetPassword.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @POST
+    @Path("/password")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun updatePassword(
+        bodyJson: String
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            path = uriInfo.path
+            httpMethod = "POST"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = bodyJson
+        }
+
+        val requestHandlerUpdatePassword = RequestHandlerUpdatePassword()
+
+        return requestHandlerUpdatePassword.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
     @POST
     @Path("/poll")
     @Consumes("application/json")
@@ -99,9 +210,7 @@ class AWSLambdaController {
     @Path("/poll")
     @Consumes("application/json")
     @Produces("application/json")
-    fun getPolls(
-
-    ): APIGatewayProxyResponseEvent {
+    fun getPolls(): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
             path = uriInfo.path
             httpMethod = "GET"
@@ -119,9 +228,7 @@ class AWSLambdaController {
     @Path("/poll/{id}")
     @Consumes("application/json")
     @Produces("application/json")
-    fun getPollById(
-
-    ): APIGatewayProxyResponseEvent {
+    fun getPollById(): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
             pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
             path = uriInfo.path
@@ -165,6 +272,7 @@ class AWSLambdaController {
 
     ): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
             path = uriInfo.path
             httpMethod = "GET"
             headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
@@ -191,9 +299,7 @@ class AWSLambdaController {
             queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
             body = null
         }
-
         val requestHandlerGetQuiz = RequestHandlerGetQuiz()
-
         return requestHandlerGetQuiz.handleRequest(apiGatewayProxyRequestEvent, null)
     }
 
@@ -205,6 +311,7 @@ class AWSLambdaController {
 
     ): APIGatewayProxyResponseEvent {
         val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
             path = uriInfo.path
             httpMethod = "GET"
             headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }

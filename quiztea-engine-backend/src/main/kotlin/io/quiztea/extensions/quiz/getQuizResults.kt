@@ -11,7 +11,7 @@ val getQuizResults: (Map<String, Any>) -> String = { params ->
 
     val quizId = params["quizId"] as? String ?: throw IllegalArgumentException("quizId cannot be null")
 
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
     val item = dynamoClient.getItem(
         tableName = tableName,
@@ -22,7 +22,7 @@ val getQuizResults: (Map<String, Any>) -> String = { params ->
     )
 
     item?.let {
-        val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
+        val textJsonParser = app.getInstance(JSONFileHandler::class)
         textJsonParser.mapToJsonString(it)
     } ?: "Item not found in $tableName."
 }

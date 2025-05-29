@@ -1,8 +1,10 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
+import com.koupper.octopus.annotations.Export
 
+@Export
 val createPollResultsTable: () -> Int = let@{
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
     val tableName = "Quiztea_Poll_Votes"
 
     if (dynamoClient.doesTableExist(tableName)) {
@@ -11,20 +13,21 @@ val createPollResultsTable: () -> Int = let@{
     }
 
     val keySchema = listOf(
-        Pair("pollId", "HASH"),
+        Pair("pollVotesId", "HASH"),
         Pair("userId", "RANGE")
     )
 
     val attributeDefinitions = listOf(
-        Pair("pollId", "S"),
+        Pair("pollVotesId", "S"),
         Pair("userId", "S")
     )
 
+
     val gsis = listOf(
         mapOf(
-            "IndexName" to "PollIdIndex",
+            "IndexName" to "pollVotesId",
             "KeySchema" to listOf(
-                mapOf("AttributeName" to "pollId", "KeyType" to "HASH")
+                mapOf("AttributeName" to "pollVotesId", "KeyType" to "HASH")
             ),
             "Projection" to mapOf("ProjectionType" to "ALL"),
             "ProvisionedThroughput" to mapOf(

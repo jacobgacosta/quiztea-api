@@ -6,11 +6,12 @@ import com.koupper.octopus.createDefaultConfiguration
 import io.quiztea.extensions.poll.getPoll
 import io.quiztea.extensions.poll.getPollVotes
 import org.glassfish.jersey.server.ResourceConfig
+import server.CORSFilter
 import java.net.URI
 import java.util.logging.Logger
 
-const val BASE_URL = "http://localhost"
-const val PORT = 8080
+const val BASE_URL = "http://0.0.0.0"
+const val PORT = 8082
 
 val logger: Logger = Logger.getLogger("ServerLogger")
 
@@ -19,6 +20,7 @@ val executor = createDefaultConfiguration()
 class Setup : ResourceConfig() {
     init {
         packages("io.quiztea.http.controllers")
+        register(CORSFilter::class.java)
     }
 }
 

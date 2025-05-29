@@ -6,21 +6,30 @@ import com.koupper.providers.files.JSONFileHandler
 
 val getQuiz: (Map<String, Any>) -> String = { params ->
     val tableName = "Quiztea_Quiz"
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
-    val quizId = params["quizId"] as? String ?: throw IllegalArgumentException("quizId cannot be null")
+    if (params["quizId"] == null) {
+        val allItems: List<Map<String, Any>> = dynamoClient.getAllItemsPaginated(tableName)
 
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+        if (allItems.isNotEmpty()) {
+            val textJsonParser = app.getInstance(JSONFileHandler::class)
+            textJsonParser.mapToJsonString(allItems)
+        } else {
+            ""
+        }
+    } else {
+        println("QuizIdIndex")
+        val item = dynamoClient.getItems(
+            tableName = tableName,
+            partitionKeyName = "quizId",
+            partitionKeyValue = params["quizId"] as String,
+            gsiName = "QuizIdIndex"
+        )?.first()
 
-    val item = dynamoClient.getItems(
-        tableName = tableName,
-        partitionKeyName = "id",
-        partitionKeyValue = quizId,
-        gsiName = "QuizIdIndex"
-    )?.first()
-
-    item?.let {
-        val textJsonParser = app.createInstanceOf(JSONFileHandler::class)
-        textJsonParser.mapToJsonString(it)
-    } ?: "Item not found in $tableName."
+        item?.let {
+            val textJsonParser = app.getInstance(JSONFileHandler::class)
+            textJsonParser.mapToJsonString(it)
+        } ?: "Item not found in $tableName."
+    }
 }
 

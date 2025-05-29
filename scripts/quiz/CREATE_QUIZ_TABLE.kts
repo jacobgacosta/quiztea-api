@@ -1,8 +1,10 @@
 import com.koupper.container.app
 import com.koupper.providers.aws.dynamo.DynamoClient
+import com.koupper.octopus.annotations.Export
 
+@Export
 val createQuizTable: () -> Int = let@{
-    val dynamoClient = app.createInstanceOf(DynamoClient::class)
+    val dynamoClient = app.getInstance(DynamoClient::class)
 
     val quizTable = "Quiztea_Quiz"
 
@@ -12,12 +14,12 @@ val createQuizTable: () -> Int = let@{
     }
 
     val keySchema = listOf(
-        Pair("id", "HASH"),
+        Pair("quizId", "HASH"),
         Pair("createdBy", "RANGE")
     )
 
     val attributeDefinitions = listOf(
-        Pair("id", "S"),
+        Pair("quizId", "S"),
         Pair("createdBy", "S")
     )
 
@@ -36,7 +38,7 @@ val createQuizTable: () -> Int = let@{
         mapOf(
             "IndexName" to "QuizIdIndex",
             "KeySchema" to listOf(
-                mapOf("AttributeName" to "id", "KeyType" to "HASH")
+                mapOf("AttributeName" to "quizId", "KeyType" to "HASH")
             ),
             "Projection" to mapOf("ProjectionType" to "ALL"),
             "ProvisionedThroughput" to mapOf(

@@ -3,31 +3,31 @@ import com.koupper.providers.aws.dynamo.DynamoClient
 import com.koupper.octopus.annotations.Export
 
 @Export
-val createPollTable: () -> Int = let@{
+val createQuizTable: () -> Int = let@{
     val dynamoClient = app.getInstance(DynamoClient::class)
 
-    val tableName = "Quiztea_Poll"
+    val quizTable = "Users"
 
-    if (dynamoClient.doesTableExist(tableName)) {
-        println("The table '$tableName' already exists.")
+    if (dynamoClient.doesTableExist(quizTable)) {
+        println("The table '$quizTable' already exists.")
         return@let 200
     }
 
     val keySchema = listOf(
-        Pair("pollId", "HASH"),
-        Pair("createdBy", "RANGE")
+        Pair("userId", "HASH"),
+        Pair("email", "RANGE")
     )
 
     val attributeDefinitions = listOf(
-        Pair("pollId", "S"),
-        Pair("createdBy", "S")
+        Pair("userId", "S"),
+        Pair("email", "S")
     )
 
     val gsis = listOf(
         mapOf(
-            "IndexName" to "CreatedByIndex",
+            "IndexName" to "EmailIndex",
             "KeySchema" to listOf(
-                mapOf("AttributeName" to "createdBy", "KeyType" to "HASH")
+                mapOf("AttributeName" to "email", "KeyType" to "HASH")
             ),
             "Projection" to mapOf("ProjectionType" to "ALL"),
             "ProvisionedThroughput" to mapOf(
@@ -36,9 +36,9 @@ val createPollTable: () -> Int = let@{
             )
         ),
         mapOf(
-            "IndexName" to "PollIdIndex",
+            "IndexName" to "UserIdIndex",
             "KeySchema" to listOf(
-                mapOf("AttributeName" to "pollId", "KeyType" to "HASH")
+                mapOf("AttributeName" to "userId", "KeyType" to "HASH")
             ),
             "Projection" to mapOf("ProjectionType" to "ALL"),
             "ProvisionedThroughput" to mapOf(
@@ -50,12 +50,12 @@ val createPollTable: () -> Int = let@{
 
     try {
         dynamoClient.createTable(
-            tableName = tableName,
+            tableName = quizTable,
             keySchema = keySchema,
             attributeDefinitions = attributeDefinitions,
             globalSecondaryIndexes = gsis
         )
-        println("$tableName successfully created with GSIs.")
+        println("$quizTable successfully created.")
     } catch (e: Exception) {
         println("Error creating table: ${e.message}")
         return@let 500
