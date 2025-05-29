@@ -10,7 +10,7 @@ import server.CORSFilter
 import java.net.URI
 import java.util.logging.Logger
 
-const val BASE_URL = "http://localhost"
+const val BASE_URL = "http://0.0.0.0"
 const val PORT = 8082
 
 val logger: Logger = Logger.getLogger("ServerLogger")

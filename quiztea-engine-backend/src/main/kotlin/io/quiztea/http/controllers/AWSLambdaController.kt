@@ -15,6 +15,42 @@ class AWSLambdaController {
     @Context
     private lateinit var inputHeaders: HttpHeaders
 
+    @GET
+    @Path("/quizzes")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getAllInit(
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetAllQuizzes = RequestHandlerGetAllQuizzes()
+        return requestHandlerGetAllQuizzes.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
+    @GET
+    @Path("/quizzes/{page}")
+    @Consumes("application/json")
+    @Produces("application/json")
+    fun getAll(
+    ): APIGatewayProxyResponseEvent {
+        val apiGatewayProxyRequestEvent = APIGatewayProxyRequestEvent().apply {
+            pathParameters = uriInfo.pathParameters.mapValues { it.value.firstOrNull() ?: "" }
+            path = uriInfo.path
+            httpMethod = "GET"
+            headers = inputHeaders.requestHeaders.mapValues { it.value.joinToString(",") }
+            queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
+            body = null
+        }
+        val requestHandlerGetAllQuizzesByLong = RequestHandlerGetAllQuizzesByLong()
+        return requestHandlerGetAllQuizzesByLong.handleRequest(apiGatewayProxyRequestEvent, null)
+    }
+
     @POST
     @Path("/user")
     @Consumes("application/json")
@@ -263,9 +299,7 @@ class AWSLambdaController {
             queryStringParameters = uriInfo.queryParameters.mapValues { it.value.joinToString(",") }
             body = null
         }
-
         val requestHandlerGetQuiz = RequestHandlerGetQuiz()
-
         return requestHandlerGetQuiz.handleRequest(apiGatewayProxyRequestEvent, null)
     }
 
